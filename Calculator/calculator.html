@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+       <table boader="1">     
+             <tr>   
+                <td colspan="4">
+                    <input type="text" id="inputBox" value="0"/>
+                 </td>  
+             </tr>
+        <tr>
+            <td class="sciBtn" onclick="scientificFunction('sin')">sin</td>
+            <td class="sciBtn" onclick="scientificFunction('cos')">cos</td>
+            <td class="sciBtn" onclick="scientificFunction('tan')">tan</td>
+            <td class="sciBtn" onclick="scientificFunction('sqrt')">√</td>
+        </tr>
+        <tr>
+            <td class="sciBtn" onclick="scientificFunction('log')">log</td>
+            <td class="sciBtn" onclick="scientificFunction('ln')">ln</td>
+            <td class="sciBtn" onclick="scientificFunction('pi')">π</td>
+            <td class="sciBtn" onclick="scientificFunction('e')">e</td>
+        </tr>
+            <tr>
+                <td class ="digitBtn" onclick="digitBtnPressed(7)">7</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(8)">8</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(9)">9</td>
+                <td class="cBtn" onclick="btnCPressed()">C</td>
+            </tr>
+            <tr>
+                <td class ="digitBtn" onclick="digitBtnPressed(4)">4</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(5)">5</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(6)">6</td>
+                <td class = "operatorBtn" onclick="operatorBtnPressed('-')">-</td>  
+            </tr>
+            <tr>
+                <td class ="digitBtn" onclick="digitBtnPressed(1)">1</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(2)">2</td>
+                <td class ="digitBtn" onclick="digitBtnPressed(3)">3</td>
+                <td class = "operatorBtn" onclick="operatorBtnPressed('+')">+</td>
+                
+            </tr>
+            <tr>
+                <td class ="digitBtn" onclick="digitBtnPressed(0)">0</td>
+                <td class="operatorBtn" onclick="percentageBtnPressed()">%</td>
+                <td class = "operatorBtn" onclick="operatorBtnPressed('x')">x</td>
+                <td class = "operatorBtn"onclick="operatorBtnPressed('/')">/</td>
+            </tr>
+            <tr>
+                <td class="operatorBtn" onclick="operatorBtnPressed('^')">^</td>
+                <td class="operatorBtn" onclick="ansBtnPressed()">Ans</td>
+                <td colspan="2" class = "operatorBtn" onclick="equalsBtnPressed()">=</td>
+            </tr>
+        </table>
+
+        <script>
+            //Boolean var,determines if the next button typed should be on a new line.
+            var newLine = true;
+            var value1;
+            var currentOperator;
+
+             function digitBtnPressed(button){
+
+                if (newLine){
+                    document.getElementById("inputBox").value = button;  
+                    newLine = false ; 
+                } else {             
+                var currentValue = document.getElementById("inputBox").value;
+                document.getElementById("inputBox").value =currentValue + button;
+                }
+            }
+        
+            //Event handler for C button.
+            function btnCPressed() {
+            document.getElementById("inputBox").value = "0";
+            value1 = null;
+            currentOperator = null;
+            newLine = true;
+            }
+
+            //Event handlerfor the operator btn
+            function operatorBtnPressed(operator){
+            currentOperator = operator;
+            value1 =parseInt(document.getElementById("inputBox").value);
+            newLine = true;    
+            }
+
+            //event handler for %
+            function percentageBtnPressed() {
+            let value = parseFloat(document.getElementById("inputBox").value);
+            let result = value / 100;
+            document.getElementById("inputBox").value = result;
+            newLine = true;
+}
+
+
+            //Event handler for equals "="
+            function equalsBtnPressed(){
+                var value2 = parseInt(document.getElementById("inputBox").value);
+                var finalTotal;
+
+                switch(currentOperator){
+                  case "+":
+                    finalTotal = value1 + value2;
+                    break;
+                    case "-":
+                    finalTotal = value1 - value2;
+                    break;
+                    case "x":
+                    finalTotal = value1 * value2;
+                    break;
+                    case "/":
+                    finalTotal = value1 / value2;
+                    break;
+                }
+                lastAnswer = finalTotal; // ✅ Store result for Ans button
+                document.getElementById("inputBox").value = finalTotal;
+                value1 = 0;
+                newLine = true;
+            }
+            //event hndler for Ans btn
+            let lastAnswer = 0;
+
+            function ansBtnPressed() {
+            document.getElementById("inputBox").value = lastAnswer;
+            newLine = true;
+            }
+
+            
+             function scientificFunction(fn) { //scientific buttons
+            let value = parseFloat(document.getElementById("inputBox").value);
+            let result;
+            switch (fn) {
+                case "sin": 
+                result = Math.sin(value * Math.PI / 180); break;
+                case "cos": 
+                result = Math.cos(value * Math.PI / 180); break;
+                case "tan": 
+                result = Math.tan(value * Math.PI / 180); break;
+                case "sqrt": 
+                result = Math.sqrt(value); break;
+                case "log" :
+                result = Math.log10(value); break;
+                case "in": 
+                result = Math.log(value); break;
+                case"pi": 
+                result = Math.PI; break;
+                case "e":
+                result = Math.E; break;
+                default: return;
+            }
+             document.getElementById("inputBox").value = result;
+            newLine = true;
+        }
+        </script>
+    </body>
+</html>
